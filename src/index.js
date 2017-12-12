@@ -87,7 +87,6 @@ export default class DbCDN {
         let file_path = data.entries[0].path_display.split('/')[1];
         let sharedContent = await this._readFileContent('/' + file_path + '/shared_link.json');
         if (sharedContent !== null) {
-            console.log('sharedcontent', sharedContent);
             return sharedContent;
         } else {
             let d = await this._readDetailMediaAlbumFiles(path, folderName, oneFile);

@@ -274,26 +274,25 @@ var DbCDN = function () {
                                 sharedContent = _context5.sent;
 
                                 if (!(sharedContent !== null)) {
-                                    _context5.next = 12;
+                                    _context5.next = 11;
                                     break;
                                 }
 
-                                console.log('sharedcontent', sharedContent);
                                 return _context5.abrupt('return', sharedContent);
 
-                            case 12:
-                                _context5.next = 14;
+                            case 11:
+                                _context5.next = 13;
                                 return this._readDetailMediaAlbumFiles(path, folderName, oneFile);
 
-                            case 14:
+                            case 13:
                                 d = _context5.sent;
-                                _context5.next = 17;
+                                _context5.next = 16;
                                 return this._writeDataToFile('/' + file_path + '/shared_link.json', JSON.stringify(d));
 
-                            case 17:
+                            case 16:
                                 return _context5.abrupt('return', d);
 
-                            case 18:
+                            case 17:
                             case 'end':
                                 return _context5.stop();
                         }
