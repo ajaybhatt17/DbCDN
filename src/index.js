@@ -104,7 +104,6 @@ export default class DbCDN {
                 path: path, include_media_info: true
             })
                 .then((response) => {
-                    console.log('detail album', response.entries);
                     let entries = response.entries.filter(e => e['.tag'] === 'file');
                     if (oneFile) {
                         entries = [entries[0]];
@@ -131,7 +130,6 @@ export default class DbCDN {
                 path: file.id
             })
                 .then((response) => {
-                    console.log(response);
                     let link = response.links.filter(e => e.id === file.id)[0];
                     if (folderName) {
                         file['folderName'] = folderName;

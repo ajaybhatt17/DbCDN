@@ -142,7 +142,6 @@ var DbCDN = function () {
                 _this4.dbx.filesListFolder({
                     path: path, include_media_info: true
                 }).then(function (response) {
-                    console.log('detail album', response.entries);
                     var entries = response.entries.filter(function (e) {
                         return e['.tag'] === 'file';
                     });
@@ -175,7 +174,6 @@ var DbCDN = function () {
                 _this5.dbx.sharingListSharedLinks({
                     path: file.id
                 }).then(function (response) {
-                    console.log(response);
                     var link = response.links.filter(function (e) {
                         return e.id === file.id;
                     })[0];
