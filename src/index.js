@@ -57,7 +57,7 @@ export default class DbCDN {
     async readMediaAlbumFolder(path) {
         let response = await this._readFileContent(path + '/shared_link.json');
         if (response !== null) {
-            return response;
+            return Promise.resolve(response);
         } else {
             let e = await this._readMediaAlbumFolder({path: path});
             await this._writeDataToFile(path + '/shared_link.json', JSON.stringify(e));
@@ -102,7 +102,7 @@ export default class DbCDN {
             let c = response.entries[0].path_display.split("/");
             album_name = c[c.length - 2];
         }
-        let entries = response.entries.filter(e => e['.tag'] === 'file');
+        let entries = response.entries.filter(e => e['.tag'] === 'file' && e.media_info);
         if (oneFile) {
             entries = [entries[0]];
         }

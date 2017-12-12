@@ -34,19 +34,19 @@ describe('Drop CDN', function () {
     // });
     //
 
-    // describe('read media album folder', function () {
-    //     it('expect two files', function (done) {
-    //         this.timeout(5000000);
-    //         let dbcdn = new DbCDN(DB_TOKEN);
-    //         dbcdn.readMediaAlbumFolder('').then(function (d) {
-    //             console.log(d);
-    //             done();
-    //         }).catch(e => {
-    //             console.log(e);
-    //             done();
-    //         });
-    //     });
-    // });
+    describe('read media album folder', function () {
+        it('expect two files', function (done) {
+            this.timeout(5000000);
+            let dbcdn = new DbCDN(DB_TOKEN);
+            dbcdn.readMediaAlbumFolder('').then(function (d) {
+                console.log(d);
+                done();
+            }).catch(e => {
+                console.log(e);
+                done();
+            });
+        });
+    });
 
     // describe('read shared album folder', function () {
     //         it('expect two files', function (done) {
@@ -62,19 +62,19 @@ describe('Drop CDN', function () {
     //         });
     //     });
 
-    describe('read shared album files', function () {
-        it('expect two files', function (done) {
-            this.timeout(5000000);
-            let dbcdn = new DbCDN(DB_TOKEN);
-            dbcdn.readDetailMediaAlbumFiles(TEST_FOLDER_ID).then(function (d) {
-                console.log(d);
-                done();
-            }).catch(e => {
-                console.log(e);
-                done();
-            });
-        });
-    });
+    // describe('read shared album files', function () {
+    //     it('expect two files', function (done) {
+    //         this.timeout(5000000);
+    //         let dbcdn = new DbCDN(DB_TOKEN);
+    //         dbcdn.readDetailMediaAlbumFiles(TEST_FOLDER_ID).then(function (d) {
+    //             console.log(d);
+    //             done();
+    //         }).catch(e => {
+    //             console.log(e);
+    //             done();
+    //         });
+    //     });
+    // });
 
     // describe('write file', function () {
     //     it('expect two files', function (done) {

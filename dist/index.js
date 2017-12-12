@@ -165,7 +165,7 @@ var DbCDN = function () {
                                     break;
                                 }
 
-                                return _context3.abrupt('return', response);
+                                return _context3.abrupt('return', Promise.resolve(response));
 
                             case 7:
                                 _context3.next = 9;
@@ -332,7 +332,7 @@ var DbCDN = function () {
                                     album_name = c[c.length - 2];
                                 }
                                 entries = response.entries.filter(function (e) {
-                                    return e['.tag'] === 'file';
+                                    return e['.tag'] === 'file' && e.media_info;
                                 });
 
                                 if (oneFile) {
