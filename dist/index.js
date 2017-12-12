@@ -226,7 +226,8 @@ var DbCDN = function () {
                     url: e.url,
                     title: e.name.split(".")[0],
                     album: e.folderName,
-                    album_id: e.folderId
+                    album_id: e.folderId,
+                    slug: e.name.split(".")[0].toLowerCase().replace(new RegExp(" ", 'g'), "-")
                 };
                 if (e.media_info) {
                     Object.assign(d, {
@@ -257,9 +258,11 @@ var DbCDN = function () {
         value: function _cdnWrapperEntries(files, mimeType) {
             return files.map(function (e) {
                 var d = {
+                    id: e.id,
                     name: e.name,
                     url: e.url,
-                    title: e.name.split(".")[0]
+                    title: e.name.split(".")[0],
+                    slug: e.name.split(".")[0].toLowerCase().replace(new RegExp(" ", 'g'), "-")
                 };
                 if (e.media_info) {
                     Object.assign(d, {
