@@ -17,9 +17,12 @@ var _underscore2 = _interopRequireDefault(_underscore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Promise = require('bluebird');
+
 var CONTENT_TYPE = exports.CONTENT_TYPE = {
     MEDIA: 'media',
     DOC: 'doc'
@@ -96,9 +99,52 @@ var DbCDN = function () {
         }
     }, {
         key: 'readMediaAlbumFolder',
-        value: function readMediaAlbumFolder(path) {
-            return this._readMediaAlbumFolder({ path: path });
-        }
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(path) {
+                var response, e;
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.next = 2;
+                                return this._readFileContent(path + '/shared_link.json');
+
+                            case 2:
+                                response = _context.sent;
+
+                                if (!(response !== null)) {
+                                    _context.next = 7;
+                                    break;
+                                }
+
+                                return _context.abrupt('return', response);
+
+                            case 7:
+                                _context.next = 9;
+                                return this._readMediaAlbumFolder({ path: path });
+
+                            case 9:
+                                e = _context.sent;
+                                _context.next = 12;
+                                return this._writeDataToFile(path + '/shared_link.json', JSON.stringify(e));
+
+                            case 12:
+                                return _context.abrupt('return', Promise.resolve(e));
+
+                            case 13:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function readMediaAlbumFolder(_x4) {
+                return _ref.apply(this, arguments);
+            }
+
+            return readMediaAlbumFolder;
+        }()
     }, {
         key: 'readMediaAlbumFolderWithSharedLink',
         value: function readMediaAlbumFolderWithSharedLink(sharedLink) {
@@ -106,111 +152,242 @@ var DbCDN = function () {
         }
     }, {
         key: '_readMediaAlbumFolder',
-        value: function _readMediaAlbumFolder(searchObj) {
-            var _this3 = this;
+        value: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(searchObj) {
+                var _this3 = this;
 
-            var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+                var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+                var response, entries, output;
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.next = 2;
+                                return this.dbx.filesListFolder(searchObj);
 
-            return new Promise(function (resolve, reject) {
-                _this3.dbx.filesListFolder(searchObj).then(function (response) {
-                    var entries = response.entries.filter(function (e) {
-                        return e['.tag'] === 'folder';
-                    });
-                    return Promise.map(entries, function (e) {
-                        return _this3.readDetailMediaAlbumFiles(e.id, e.name, true);
-                    }).then(function (e) {
-                        if (!_underscore2.default.isEmpty(folderName)) {
-                            return resolve(_underscore2.default.flatten(e));
-                        } else {
-                            return resolve(_this3._cdnWrapper(_underscore2.default.flatten(e), CONTENT_TYPE.MEDIA));
+                            case 2:
+                                response = _context2.sent;
+                                entries = response.entries.filter(function (e) {
+                                    return e['.tag'] === 'folder';
+                                });
+                                _context2.next = 6;
+                                return Promise.map(entries, function (e) {
+                                    return _this3._readDetailMediaAlbumFiles(e.id, e.name, true);
+                                });
+
+                            case 6:
+                                output = _context2.sent;
+
+                                if (_underscore2.default.isEmpty(folderName)) {
+                                    _context2.next = 11;
+                                    break;
+                                }
+
+                                return _context2.abrupt('return', Promise.resolve(_underscore2.default.flatten(output)));
+
+                            case 11:
+                                return _context2.abrupt('return', Promise.resolve(this._cdnWrapper(_underscore2.default.flatten(output), CONTENT_TYPE.MEDIA)));
+
+                            case 12:
+                            case 'end':
+                                return _context2.stop();
                         }
-                    });
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            });
-        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function _readMediaAlbumFolder(_x5) {
+                return _ref2.apply(this, arguments);
+            }
+
+            return _readMediaAlbumFolder;
+        }()
     }, {
         key: 'readDetailMediaAlbumFiles',
-        value: function readDetailMediaAlbumFiles(path) {
-            var _this4 = this;
+        value: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(path) {
+                var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+                var oneFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+                var data, file_path, sharedContent, d;
+                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                _context3.next = 2;
+                                return this.dbx.filesListFolder({ path: path, include_media_info: true });
 
-            var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-            var oneFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+                            case 2:
+                                data = _context3.sent;
+                                file_path = data.entries[0].path_display.split('/')[1];
+                                _context3.next = 6;
+                                return this._readFileContent('/' + file_path + '/shared_link.json');
 
-            var album_name = void 0;
-            return new Promise(function (resolve, reject) {
-                _this4.dbx.filesListFolder({
-                    path: path, include_media_info: true
-                }).then(function (response) {
-                    if (response.entries.length > 0) {
-                        var c = response.entries[0].path_display.split("/");
-                        album_name = c[c.length - 2];
-                    }
-                    var entries = response.entries.filter(function (e) {
-                        return e['.tag'] === 'file';
-                    });
-                    if (oneFile) {
-                        entries = [entries[0]];
-                    }
-                    return Promise.map(entries, function (e) {
-                        return _this4._getFileMetaData(e, folderName, path);
-                    }).then(function (e) {
-                        if (!_underscore2.default.isEmpty(folderName)) {
-                            return resolve(_underscore2.default.flatten(e));
-                        } else {
-                            return resolve({
-                                album_id: path.replace('id:', ''),
-                                album_name: album_name,
-                                items: _this4._cdnWrapperEntries(_underscore2.default.flatten(e), CONTENT_TYPE.MEDIA)
-                            });
+                            case 6:
+                                sharedContent = _context3.sent;
+
+                                if (!(sharedContent !== null)) {
+                                    _context3.next = 12;
+                                    break;
+                                }
+
+                                console.log('sharedcontent', sharedContent);
+                                return _context3.abrupt('return', sharedContent);
+
+                            case 12:
+                                _context3.next = 14;
+                                return this._readDetailMediaAlbumFiles(path, folderName, oneFile);
+
+                            case 14:
+                                d = _context3.sent;
+                                _context3.next = 17;
+                                return this._writeDataToFile('/' + file_path + '/shared_link.json', JSON.stringify(d));
+
+                            case 17:
+                                return _context3.abrupt('return', d);
+
+                            case 18:
+                            case 'end':
+                                return _context3.stop();
                         }
-                    });
-                }).catch(function (error) {
-                    return reject(error);
-                });
-            });
-        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function readDetailMediaAlbumFiles(_x7) {
+                return _ref3.apply(this, arguments);
+            }
+
+            return readDetailMediaAlbumFiles;
+        }()
+    }, {
+        key: '_readDetailMediaAlbumFiles',
+        value: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(path) {
+                var _this4 = this;
+
+                var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+                var oneFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+                var album_name, response, c, entries, output;
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                album_name = void 0;
+                                _context4.next = 3;
+                                return this.dbx.filesListFolder({ path: path, include_media_info: true });
+
+                            case 3:
+                                response = _context4.sent;
+
+                                if (response.entries.length > 0) {
+                                    c = response.entries[0].path_display.split("/");
+
+                                    album_name = c[c.length - 2];
+                                }
+                                entries = response.entries.filter(function (e) {
+                                    return e['.tag'] === 'file';
+                                });
+
+                                if (oneFile) {
+                                    entries = [entries[0]];
+                                }
+                                _context4.next = 9;
+                                return Promise.map(entries, function (e) {
+                                    return _this4._getFileMetaData(e, folderName, path);
+                                });
+
+                            case 9:
+                                output = _context4.sent;
+
+                                if (_underscore2.default.isEmpty(folderName)) {
+                                    _context4.next = 14;
+                                    break;
+                                }
+
+                                return _context4.abrupt('return', Promise.resolve(_underscore2.default.flatten(output)));
+
+                            case 14:
+                                return _context4.abrupt('return', Promise.resolve({
+                                    album_id: path.replace('id:', ''),
+                                    album_name: album_name,
+                                    items: this._cdnWrapperEntries(_underscore2.default.flatten(output), CONTENT_TYPE.MEDIA)
+                                }));
+
+                            case 15:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function _readDetailMediaAlbumFiles(_x10) {
+                return _ref4.apply(this, arguments);
+            }
+
+            return _readDetailMediaAlbumFiles;
+        }()
     }, {
         key: '_getFileMetaData',
-        value: function _getFileMetaData(file) {
-            var _this5 = this;
+        value: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(file) {
+                var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+                var folderId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+                var response, link;
+                return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                    while (1) {
+                        switch (_context5.prev = _context5.next) {
+                            case 0:
+                                _context5.next = 2;
+                                return this.dbx.sharingListSharedLinks({
+                                    path: file.id
+                                });
 
-            var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-            var folderId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+                            case 2:
+                                response = _context5.sent;
+                                link = response.links.filter(function (e) {
+                                    return e.id === file.id;
+                                })[0];
 
-            return new Promise(function (resolve, reject) {
-                _this5.dbx.sharingListSharedLinks({
-                    path: file.id
-                }).then(function (response) {
-                    var link = response.links.filter(function (e) {
-                        return e.id === file.id;
-                    })[0];
-                    if (folderName) {
-                        file['folderName'] = folderName;
+                                if (folderName) {
+                                    file['folderName'] = folderName;
+                                }
+                                if (folderId) {
+                                    file['folderId'] = folderId;
+                                }
+
+                                if (!link) {
+                                    _context5.next = 11;
+                                    break;
+                                }
+
+                                file.url = link.url.replace("?dl=0", "?raw=1");
+                                return _context5.abrupt('return', Promise.resolve(file));
+
+                            case 11:
+                                return _context5.abrupt('return', this._createFileSharedLink(file));
+
+                            case 12:
+                            case 'end':
+                                return _context5.stop();
+                        }
                     }
-                    if (folderId) {
-                        file['folderId'] = folderId;
-                    }
-                    if (link) {
-                        file.url = link.url.replace("?dl=0", "?raw=1");
-                        return resolve(file);
-                    } else {
-                        return _this5._createFileSharedLink(file);
-                    }
-                }).catch(function (error) {
-                    console.log(error);
-                    return reject(error);
-                });
-            });
-        }
+                }, _callee5, this);
+            }));
+
+            function _getFileMetaData(_x13) {
+                return _ref5.apply(this, arguments);
+            }
+
+            return _getFileMetaData;
+        }()
     }, {
         key: '_createFileSharedLink',
         value: function _createFileSharedLink(file) {
-            var _this6 = this;
+            var _this5 = this;
 
             return new Promise(function (resolve, reject) {
-                _this6.dbx.sharingCreateSharedLinkWithSettings({
+                _this5.dbx.sharingCreateSharedLinkWithSettings({
                     path: file.id,
                     settings: {
                         requested_visibility: {
@@ -281,6 +458,31 @@ var DbCDN = function () {
                     });
                 }
                 return d;
+            });
+        }
+    }, {
+        key: '_writeDataToFile',
+        value: function _writeDataToFile(fileName, data) {
+            return this.dbx.filesUpload({
+                contents: data,
+                path: fileName
+            }).then(function (response) {
+                return response;
+            }).catch(function (error) {
+                return error;
+            });
+        }
+    }, {
+        key: '_readFileContent',
+        value: function _readFileContent(fileName) {
+            var _this6 = this;
+
+            return new Promise(function (resolve, reject) {
+                _this6.dbx.filesDownload({ path: fileName }).then(function (response) {
+                    return resolve(JSON.parse(response.fileBinary));
+                }).catch(function (error) {
+                    return resolve(null);
+                });
             });
         }
     }]);
