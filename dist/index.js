@@ -138,10 +138,15 @@ var DbCDN = function () {
             var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
             var oneFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
+            var album_name = void 0;
             return new Promise(function (resolve, reject) {
                 _this4.dbx.filesListFolder({
                     path: path, include_media_info: true
                 }).then(function (response) {
+                    if (response.entries.length > 0) {
+                        var c = response.entries[0].path_display.split("/");
+                        album_name = c[c.length - 2];
+                    }
                     var entries = response.entries.filter(function (e) {
                         return e['.tag'] === 'file';
                     });
@@ -154,7 +159,11 @@ var DbCDN = function () {
                         if (!_underscore2.default.isEmpty(folderName)) {
                             return resolve(_underscore2.default.flatten(e));
                         } else {
-                            return resolve(_this4._cdnWrapperEntries(_underscore2.default.flatten(e), CONTENT_TYPE.MEDIA));
+                            return resolve({
+                                album_id: path.replace('id:', ''),
+                                album_name: album_name,
+                                items: _this4._cdnWrapperEntries(_underscore2.default.flatten(e), CONTENT_TYPE.MEDIA)
+                            });
                         }
                     });
                 }).catch(function (error) {
@@ -258,7 +267,7 @@ var DbCDN = function () {
         value: function _cdnWrapperEntries(files, mimeType) {
             return files.map(function (e) {
                 var d = {
-                    id: e.id,
+                    id: e.id.replace('id:', ''),
                     name: e.name,
                     url: e.url,
                     title: e.name.split(".")[0],

@@ -99,11 +99,16 @@ export default class DbCDN {
     }
 
     readDetailMediaAlbumFiles(path, folderName = '', oneFile = false) {
+        let album_name;
         return new Promise((resolve, reject) => {
             this.dbx.filesListFolder({
                 path: path, include_media_info: true
             })
                 .then((response) => {
+                    if (response.entries.length > 0) {
+                        let c = response.entries[0].path_display.split("/");
+                        album_name = c[c.length - 2];
+                    }
                     let entries = response.entries.filter(e => e['.tag'] === 'file');
                     if (oneFile) {
                         entries = [entries[0]];
@@ -114,7 +119,11 @@ export default class DbCDN {
                         if (!_.isEmpty(folderName)) {
                             return resolve(_.flatten(e));
                         } else {
-                            return resolve(this._cdnWrapperEntries(_.flatten(e), CONTENT_TYPE.MEDIA));
+                            return resolve({
+                                album_id: path.replace('id:', ''),
+                                album_name: album_name,
+                                items: this._cdnWrapperEntries(_.flatten(e), CONTENT_TYPE.MEDIA)
+                            });
                         }
                     });
                 })
@@ -213,7 +222,7 @@ export default class DbCDN {
     _cdnWrapperEntries(files, mimeType) {
         return files.map(e => {
             let d = {
-                id: e.id,
+                id: e.id.replace('id:', ''),
                 name: e.name,
                 url: e.url,
                 title: e.name.split(".")[0],
@@ -227,7 +236,7 @@ export default class DbCDN {
                 });
             }
             return d;
-        });
+        })
     }
 
 }
