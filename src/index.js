@@ -182,7 +182,8 @@ export default class DbCDN {
                 url: e.url,
                 title: e.name.split(".")[0],
                 album: e.folderName,
-                album_id: e.folderId
+                album_id: e.folderId,
+                slug: e.name.split(".")[0].toLowerCase().replace(new RegExp(" ", 'g'), "-")
             };
             if (e.media_info) {
                 Object.assign(d, {
@@ -212,9 +213,11 @@ export default class DbCDN {
     _cdnWrapperEntries(files, mimeType) {
         return files.map(e => {
             let d = {
+                id: e.id,
                 name: e.name,
                 url: e.url,
                 title: e.name.split(".")[0],
+                slug: e.name.split(".")[0].toLowerCase().replace(new RegExp(" ", 'g'), "-")
             };
             if (e.media_info) {
                 Object.assign(d, {
