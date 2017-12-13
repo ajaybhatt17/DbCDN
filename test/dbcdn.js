@@ -1,11 +1,7 @@
 // import {default as DbCDN, CONTENT_TYPE} from '../src/index';
 
 var DbCDN = require('../dist/index').default;
-
-import {
-    DB_TOKEN, TEST_CREATE_FILE, TEST_FOLDER_ID, TEST_SHARED_FOLDER_LINK,
-    TEST_SHARED_FOLDER_NAME
-} from "../constant";
+var DB_TOKEN = require('../constant').DB_TOKEN;
 
 describe('Drop CDN', function () {
 

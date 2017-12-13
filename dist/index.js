@@ -170,26 +170,30 @@ var DbCDN = function () {
                             case 2:
                                 response = _context3.sent;
 
+                                console.log('read file');
+
                                 if (!(response !== null)) {
-                                    _context3.next = 7;
+                                    _context3.next = 9;
                                     break;
                                 }
 
+                                console.log('responding file');
                                 return _context3.abrupt('return', Promise.resolve(response));
 
-                            case 7:
-                                _context3.next = 9;
+                            case 9:
+                                console.log('read api');
+                                _context3.next = 12;
                                 return this._readMediaAlbumFolder({ path: path });
 
-                            case 9:
+                            case 12:
                                 e = _context3.sent;
-                                _context3.next = 12;
+                                _context3.next = 15;
                                 return this._writeDataToFile(path + '/shared_link.json', JSON.stringify(e));
 
-                            case 12:
+                            case 15:
                                 return _context3.abrupt('return', Promise.resolve(e));
 
-                            case 13:
+                            case 16:
                             case 'end':
                                 return _context3.stop();
                         }
