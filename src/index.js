@@ -56,12 +56,9 @@ export default class DbCDN {
 
     async readMediaAlbumFolder(path) {
         let response = await this._readFileContent(path + '/shared_link.json');
-        console.log('read file');
         if (response !== null) {
-            console.log('responding file');
             return Promise.resolve(response);
         } else {
-            console.log('read api');
             let e = await this._readMediaAlbumFolder({path: path});
             await this._writeDataToFile(path + '/shared_link.json', JSON.stringify(e));
             return Promise.resolve(e);
@@ -240,7 +237,6 @@ export default class DbCDN {
             return new Promise((resolve, reject) => {
                 let reader = new FileReader();
                 reader.onload = (res) => {
-                    console.log('that was not so simple!');
                     return resolve(JSON.parse(res.target.result));
                 };
                 reader.onerror = (err) => {
