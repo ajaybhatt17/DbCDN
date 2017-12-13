@@ -5,7 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CONTENT_TYPE = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _dropbox = require('dropbox');
 
@@ -17,10 +31,6 @@ var _underscore2 = _interopRequireDefault(_underscore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var Promise = require('bluebird');
 
 var CONTENT_TYPE = exports.CONTENT_TYPE = {
@@ -30,20 +40,20 @@ var CONTENT_TYPE = exports.CONTENT_TYPE = {
 
 var DbCDN = function () {
     function DbCDN(accessToken) {
-        _classCallCheck(this, DbCDN);
+        (0, _classCallCheck3.default)(this, DbCDN);
 
         this.dbx = new _dropbox2.default({ accessToken: accessToken });
     }
 
-    _createClass(DbCDN, [{
+    (0, _createClass3.default)(DbCDN, [{
         key: 'readFolder',
         value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(path, mimeType) {
+            var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(path, mimeType) {
                 var _this = this;
 
                 var folderName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
                 var response, e;
-                return regeneratorRuntime.wrap(function _callee$(_context) {
+                return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
@@ -90,13 +100,13 @@ var DbCDN = function () {
     }, {
         key: 'readSharedFolder',
         value: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(sharedLink, mimeType) {
+            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(sharedLink, mimeType) {
                 var _this2 = this;
 
                 var deepSearch = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
                 var folderName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
                 var response, e;
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                return _regenerator2.default.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
@@ -148,9 +158,9 @@ var DbCDN = function () {
     }, {
         key: 'readMediaAlbumFolder',
         value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(path) {
+            var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(path) {
                 var response, e;
-                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                return _regenerator2.default.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
@@ -161,25 +171,26 @@ var DbCDN = function () {
                                 response = _context3.sent;
 
                                 if (!(response !== null)) {
-                                    _context3.next = 7;
+                                    _context3.next = 8;
                                     break;
                                 }
 
+                                console.log('data', response);
                                 return _context3.abrupt('return', Promise.resolve(response));
 
-                            case 7:
-                                _context3.next = 9;
+                            case 8:
+                                _context3.next = 10;
                                 return this._readMediaAlbumFolder({ path: path });
 
-                            case 9:
+                            case 10:
                                 e = _context3.sent;
-                                _context3.next = 12;
+                                _context3.next = 13;
                                 return this._writeDataToFile(path + '/shared_link.json', JSON.stringify(e));
 
-                            case 12:
+                            case 13:
                                 return _context3.abrupt('return', Promise.resolve(e));
 
-                            case 13:
+                            case 14:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -201,12 +212,12 @@ var DbCDN = function () {
     }, {
         key: '_readMediaAlbumFolder',
         value: function () {
-            var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(searchObj) {
+            var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(searchObj) {
                 var _this3 = this;
 
                 var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var response, entries, output;
-                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                return _regenerator2.default.wrap(function _callee4$(_context4) {
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
@@ -253,11 +264,11 @@ var DbCDN = function () {
     }, {
         key: 'readDetailMediaAlbumFiles',
         value: function () {
-            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(path) {
+            var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(path) {
                 var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var oneFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
                 var data, file_path, sharedContent, d;
-                return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                return _regenerator2.default.wrap(function _callee5$(_context5) {
                     while (1) {
                         switch (_context5.prev = _context5.next) {
                             case 0:
@@ -309,13 +320,13 @@ var DbCDN = function () {
     }, {
         key: '_readDetailMediaAlbumFiles',
         value: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(path) {
+            var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(path) {
                 var _this4 = this;
 
                 var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var oneFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
                 var album_name, response, c, entries, output;
-                return regeneratorRuntime.wrap(function _callee6$(_context6) {
+                return _regenerator2.default.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
                             case 0:
@@ -377,11 +388,11 @@ var DbCDN = function () {
     }, {
         key: '_getFileMetaData',
         value: function () {
-            var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(file) {
+            var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(file) {
                 var folderName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var folderId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
                 var response, link;
-                return regeneratorRuntime.wrap(function _callee7$(_context7) {
+                return _regenerator2.default.wrap(function _callee7$(_context7) {
                     while (1) {
                         switch (_context7.prev = _context7.next) {
                             case 0:
@@ -533,7 +544,6 @@ var DbCDN = function () {
             });
         }
     }]);
-
     return DbCDN;
 }();
 
