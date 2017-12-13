@@ -556,20 +556,28 @@ var DbCDN = function () {
                                 return _context8.abrupt('return', Promise.resolve(JSON.parse(response.fileBinary)));
 
                             case 7:
-                                if (response.fileBob) {
-                                    reader = new FileReader();
-
-                                    reader.onload = function (res) {
-                                        console.log('that was not so simple!');
-                                        return Promise.resolve(JSON.parse(res));
-                                    };
-                                    reader.readAsText(response.fileBob);
+                                if (!response.fileBlob) {
+                                    _context8.next = 14;
+                                    break;
                                 }
 
-                            case 8:
+                                reader = new FileReader();
+
+                                reader.onload = function (res) {
+                                    console.log('that was not so simple!');
+                                    return Promise.resolve(JSON.parse(res.target.result));
+                                };
+                                reader.onerror = function (err) {
+                                    return null;
+                                };
+                                reader.readAsText(response.fileBlob);
+                                _context8.next = 15;
+                                break;
+
+                            case 14:
                                 return _context8.abrupt('return', null);
 
-                            case 9:
+                            case 15:
                             case 'end':
                                 return _context8.stop();
                         }

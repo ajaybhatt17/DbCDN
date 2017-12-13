@@ -236,15 +236,19 @@ export default class DbCDN {
         let response = await this.dbx.filesDownload({path: fileName});
         if (response.fileBinary) {
             return Promise.resolve(JSON.parse(response.fileBinary));
-        } else if (response.fileBob) {
+        } else if (response.fileBlob) {
             let reader = new FileReader();
             reader.onload = (res) => {
                 console.log('that was not so simple!');
-                return Promise.resolve(JSON.parse(res));
+                return Promise.resolve(JSON.parse(res.target.result));
             };
-            reader.readAsText(response.fileBob);
+            reader.onerror = (err) => {
+                return null;
+            };
+            reader.readAsText(response.fileBlob);
+        } else {
+            return null;
         }
-        return null;
     }
 
 }
