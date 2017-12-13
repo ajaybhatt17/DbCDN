@@ -537,7 +537,7 @@ var DbCDN = function () {
         key: '_readFileContent',
         value: function () {
             var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(fileName) {
-                var response, reader;
+                var response;
                 return _regenerator2.default.wrap(function _callee8$(_context8) {
                     while (1) {
                         switch (_context8.prev = _context8.next) {
@@ -557,27 +557,26 @@ var DbCDN = function () {
 
                             case 7:
                                 if (!response.fileBlob) {
-                                    _context8.next = 14;
+                                    _context8.next = 11;
                                     break;
                                 }
 
-                                reader = new FileReader();
+                                return _context8.abrupt('return', new Promise(function (resolve, reject) {
+                                    var reader = new FileReader();
+                                    reader.onload = function (res) {
+                                        console.log('that was not so simple!');
+                                        return resolve(JSON.parse(res.target.result));
+                                    };
+                                    reader.onerror = function (err) {
+                                        return resolve(null);
+                                    };
+                                    reader.readAsText(response.fileBlob);
+                                }));
 
-                                reader.onload = function (res) {
-                                    console.log('that was not so simple!');
-                                    return Promise.resolve(JSON.parse(res.target.result));
-                                };
-                                reader.onerror = function (err) {
-                                    return null;
-                                };
-                                reader.readAsText(response.fileBlob);
-                                _context8.next = 15;
-                                break;
-
-                            case 14:
+                            case 11:
                                 return _context8.abrupt('return', null);
 
-                            case 15:
+                            case 12:
                             case 'end':
                                 return _context8.stop();
                         }

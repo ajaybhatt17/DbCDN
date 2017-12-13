@@ -237,15 +237,17 @@ export default class DbCDN {
         if (response.fileBinary) {
             return Promise.resolve(JSON.parse(response.fileBinary));
         } else if (response.fileBlob) {
-            let reader = new FileReader();
-            reader.onload = (res) => {
-                console.log('that was not so simple!');
-                return Promise.resolve(JSON.parse(res.target.result));
-            };
-            reader.onerror = (err) => {
-                return null;
-            };
-            reader.readAsText(response.fileBlob);
+            return new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.onload = (res) => {
+                    console.log('that was not so simple!');
+                    return resolve(JSON.parse(res.target.result));
+                };
+                reader.onerror = (err) => {
+                    return resolve(null);
+                };
+                reader.readAsText(response.fileBlob);
+            });
         } else {
             return null;
         }
