@@ -170,30 +170,26 @@ var DbCDN = function () {
                             case 2:
                                 response = _context3.sent;
 
-                                console.log('read file');
-
                                 if (!(response !== null)) {
-                                    _context3.next = 9;
+                                    _context3.next = 7;
                                     break;
                                 }
 
-                                console.log('responding file');
                                 return _context3.abrupt('return', Promise.resolve(response));
 
-                            case 9:
-                                console.log('read api');
-                                _context3.next = 12;
+                            case 7:
+                                _context3.next = 9;
                                 return this._readMediaAlbumFolder({ path: path });
 
-                            case 12:
+                            case 9:
                                 e = _context3.sent;
-                                _context3.next = 15;
+                                _context3.next = 12;
                                 return this._writeDataToFile(path + '/shared_link.json', JSON.stringify(e));
 
-                            case 15:
+                            case 12:
                                 return _context3.abrupt('return', Promise.resolve(e));
 
-                            case 16:
+                            case 13:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -564,7 +560,6 @@ var DbCDN = function () {
                                 return _context8.abrupt('return', new Promise(function (resolve, reject) {
                                     var reader = new FileReader();
                                     reader.onload = function (res) {
-                                        console.log('that was not so simple!');
                                         return resolve(JSON.parse(res.target.result));
                                     };
                                     reader.onerror = function (err) {
