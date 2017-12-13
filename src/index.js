@@ -232,16 +232,19 @@ export default class DbCDN {
         })
     }
 
-    _readFileContent(fileName) {
-        return new Promise((resolve, reject) => {
-            this.dbx.filesDownload({path: fileName})
-                .then(response => {
-                    return resolve(JSON.parse(response.fileBinary));
-                })
-                .catch(error => {
-                    return resolve(null);
-                });
-        });
+    async _readFileContent(fileName) {
+        let response = await this.dbx.filesDownload({path: fileName});
+        if (response.fileBinary) {
+            return Promise.resolve(JSON.parse(response.fileBinary));
+        } else if (response.fileBob) {
+            let reader = new FileReader();
+            reader.onload = (res) => {
+                console.log('that was not so simple!');
+                return Promise.resolve(JSON.parse(res));
+            };
+            reader.readAsText(response.fileBob);
+        }
+        return null;
     }
 
 }

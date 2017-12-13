@@ -535,17 +535,54 @@ var DbCDN = function () {
         }
     }, {
         key: '_readFileContent',
-        value: function _readFileContent(fileName) {
-            var _this6 = this;
+        value: function () {
+            var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(fileName) {
+                var response, reader;
+                return _regenerator2.default.wrap(function _callee8$(_context8) {
+                    while (1) {
+                        switch (_context8.prev = _context8.next) {
+                            case 0:
+                                _context8.next = 2;
+                                return this.dbx.filesDownload({ path: fileName });
 
-            return new Promise(function (resolve, reject) {
-                _this6.dbx.filesDownload({ path: fileName }).then(function (response) {
-                    return resolve(JSON.parse(response.fileBinary));
-                }).catch(function (error) {
-                    return resolve(null);
-                });
-            });
-        }
+                            case 2:
+                                response = _context8.sent;
+
+                                if (!response.fileBinary) {
+                                    _context8.next = 7;
+                                    break;
+                                }
+
+                                return _context8.abrupt('return', Promise.resolve(JSON.parse(response.fileBinary)));
+
+                            case 7:
+                                if (response.fileBob) {
+                                    reader = new FileReader();
+
+                                    reader.onload = function (res) {
+                                        console.log('that was not so simple!');
+                                        return Promise.resolve(JSON.parse(res));
+                                    };
+                                    reader.readAsText(response.fileBob);
+                                }
+
+                            case 8:
+                                return _context8.abrupt('return', null);
+
+                            case 9:
+                            case 'end':
+                                return _context8.stop();
+                        }
+                    }
+                }, _callee8, this);
+            }));
+
+            function _readFileContent(_x20) {
+                return _ref8.apply(this, arguments);
+            }
+
+            return _readFileContent;
+        }()
     }]);
     return DbCDN;
 }();
