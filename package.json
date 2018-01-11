@@ -1,6 +1,7 @@
 {
   "name": "DbCDN",
   "version": "0.0.1",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register --require babel-polyfill",
     "simple-test": "mocha",

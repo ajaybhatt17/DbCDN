@@ -538,22 +538,31 @@ var DbCDN = function () {
                     while (1) {
                         switch (_context8.prev = _context8.next) {
                             case 0:
-                                _context8.next = 2;
+                                response = void 0;
+                                _context8.prev = 1;
+                                _context8.next = 4;
                                 return this.dbx.filesDownload({ path: fileName });
 
-                            case 2:
+                            case 4:
                                 response = _context8.sent;
+                                _context8.next = 9;
+                                break;
 
-                                if (!response.fileBinary) {
-                                    _context8.next = 7;
+                            case 7:
+                                _context8.prev = 7;
+                                _context8.t0 = _context8['catch'](1);
+
+                            case 9:
+                                if (!(response && response.fileBinary)) {
+                                    _context8.next = 13;
                                     break;
                                 }
 
                                 return _context8.abrupt('return', Promise.resolve(JSON.parse(response.fileBinary)));
 
-                            case 7:
-                                if (!response.fileBlob) {
-                                    _context8.next = 11;
+                            case 13:
+                                if (!(response && response.fileBlob)) {
+                                    _context8.next = 17;
                                     break;
                                 }
 
@@ -568,15 +577,15 @@ var DbCDN = function () {
                                     reader.readAsText(response.fileBlob);
                                 }));
 
-                            case 11:
+                            case 17:
                                 return _context8.abrupt('return', null);
 
-                            case 12:
+                            case 18:
                             case 'end':
                                 return _context8.stop();
                         }
                     }
-                }, _callee8, this);
+                }, _callee8, this, [[1, 7]]);
             }));
 
             function _readFileContent(_x20) {

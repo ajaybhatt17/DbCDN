@@ -230,10 +230,14 @@ export default class DbCDN {
     }
 
     async _readFileContent(fileName) {
-        let response = await this.dbx.filesDownload({path: fileName});
-        if (response.fileBinary) {
+        let response;
+        try {
+            response = await this.dbx.filesDownload({path: fileName});
+        } catch(err){
+        }
+        if (response && response.fileBinary) {
             return Promise.resolve(JSON.parse(response.fileBinary));
-        } else if (response.fileBlob) {
+        } else if (response && response.fileBlob) {
             return new Promise((resolve, reject) => {
                 let reader = new FileReader();
                 reader.onload = (res) => {
