@@ -1,9 +1,18 @@
 {
   "name": "DbCDN",
   "version": "0.0.1",
+  "description": "cdn client using dropbox",
   "main": "dist/index.js",
   "license": "BSD",
   "author": "Ajay Bhatt <ajaybhatt17@gmail.com> (https://github.com/ajaybhatt17/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajaybhatt17/DbCDN.git"
+  },
+  "keywords": [ "cdn", "dropbox"],
+  "bugs": {
+    "url": "https://github.com/ajaybhatt17/DbCDN/issues"
+  },
   "scripts": {
     "test": "mocha --compilers js:babel-register --require babel-polyfill",
     "simple-test": "mocha",
