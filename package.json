@@ -1,5 +1,5 @@
 {
-  "name": "DbCDN",
+  "name": "db-cdn",
   "version": "0.0.1",
   "description": "cdn client using dropbox",
   "main": "dist/index.js",
