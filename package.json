@@ -2,6 +2,8 @@
   "name": "DbCDN",
   "version": "0.0.1",
   "main": "dist/index.js",
+  "license": "BSD",
+  "author": "Ajay Bhatt <ajaybhatt17@gmail.com> (https://github.com/ajaybhatt17/)",
   "scripts": {
     "test": "mocha --compilers js:babel-register --require babel-polyfill",
     "simple-test": "mocha",

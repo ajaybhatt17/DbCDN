@@ -15,6 +15,20 @@ export default class DbCDN {
         this.dbx = new Dropbox({accessToken: accessToken});
     }
 
+    async initSharedLink(path) {
+        let data = [];
+        try {
+            data = await this.readMediaAlbumFolder(path);
+        } catch(err){
+        }
+        for (var index in data) {
+            try {
+                await this.readDetailMediaAlbumFiles('id:' + data[index]['album_id']);
+            } catch (err){
+            }
+        }
+    }
+
     async readFolder(path, mimeType, folderName = '') {
         let response = this.dbx.filesListFolder({
             path: path,
@@ -151,7 +165,7 @@ export default class DbCDN {
                 }
             })
                 .then(function (response) {
-                    file.url = response.url;
+                    file.url = response.url.replace("?dl=0", "?raw=1");
                     return resolve(file);
                 })
                 .catch(function (error) {
@@ -233,7 +247,7 @@ export default class DbCDN {
         let response;
         try {
             response = await this.dbx.filesDownload({path: fileName});
-        } catch(err){
+        } catch (err) {
         }
         if (response && response.fileBinary) {
             return Promise.resolve(JSON.parse(response.fileBinary));

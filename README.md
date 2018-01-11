@@ -1,12 +1,9 @@
 
-Db-CDN
---------------------
+## Db-CDN
 
 Client to use dropbox space to serve as cdn data
 
-
-Idea
--------------------
+## Idea
 
 Dropbox provide two type permission type - full dropbox and app folder based permission.
 
@@ -20,8 +17,7 @@ Next consecutive calls will read shared_link file for file links
 If you add new file/s in any folder then delete remove shared_link.json file
 
 
-Addition Info
---------------------
+## Addition Info
 
 Full dropbox - full dropbox access
 
@@ -29,13 +25,19 @@ App Folder - will give only particular folder access.
 
 Your app folder will be in `/home/Apps/APP-FOLDER`
  
+## Example
 
-For testing
---------------------
+http://gallery.ajaybhatt17.in/
+
+## For testing
 
 ``cp constant.js.example constant.js``
 
 change db token in constant.js
 
 `npm test`
+
+## License
+
+[BSD](./LICENSE)
 
