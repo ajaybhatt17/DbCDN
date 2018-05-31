@@ -27,7 +27,7 @@ Your app folder will be in `/home/Apps/APP-FOLDER`
  
 ## Example/Demo
 
-http://gallery.ajaybhatt17.in/ (https://github.com/ajaybhatt17/gallery-blog/)
+https://theelement-5b4d4.firebaseapp.com/ (https://github.com/ajaybhatt17/gallery-blog/)
 
 ## For testing
 
