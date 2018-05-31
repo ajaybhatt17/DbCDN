@@ -25,9 +25,9 @@ App Folder - will give only particular folder access.
 
 Your app folder will be in `/home/Apps/APP-FOLDER`
  
-## Example
+## Example/Demo
 
-http://gallery.ajaybhatt17.in/
+http://gallery.ajaybhatt17.in/ (https://github.com/ajaybhatt17/gallery-blog/)
 
 ## For testing
 
